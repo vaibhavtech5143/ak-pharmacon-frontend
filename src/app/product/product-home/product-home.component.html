@@ -106,7 +106,6 @@
             <button class="btn btn-success my-4" (click)="visibleBatchProductId=product._id">
               Show Batch
             </button>
-            <button class="btn btn-lg btn-outline-primary" (click)="open(content,product)">Launch demo modal</button>
           </div>
           <div class="row p-4">
             <div class="col-12 col-sm-6">
@@ -139,8 +138,6 @@
                 <p><b>Updated</b>: {{batch?.updatedAt | date:'medium'}}</p>
               </div>
               <div class="col-12 col-sm-6 text-left border-top bg-light">
-
-
                 <p><b>Marging</b>: {{batch?.margin}}</p>
                 <p><b>OP Quantity</b>: {{batch?.opQuantity}}</p>
                 <p><b>Outer</b>: {{batch?.outer}}</p>
@@ -151,6 +148,7 @@
                 <p><b>Total Amount Excluding Tax</b>: {{batch?.totalAmountExcludingTax}}</p>
                 <p><b>Total Tax</b>: {{batch?.totalTax}}</p>
                 <p><b>Final Amount</b>: {{batch?.finalAmount}}</p>
+                <button class="btn btn-lg btn-outline-primary" (click)="openClearStockModal(content,product,batch)">Clear Stock</button>
               </div>
 
             </div>
@@ -171,11 +169,20 @@
 
 <ng-template #content let-modal>
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
+    <h4 class="modal-title" id="modal-basic-title">Stock Update</h4>
     <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
   </div>
   <div class="modal-body">
-
+    <p>
+      Product: {{productDataInModal?.name}}
+    </p>
+    <p>
+      Batch: {{productDataInModal?.batchNumber}}
+    </p>
+    <p>
+      Available Quantity: {{productDataInModal?.saleQuantity}}
+    </p>
+    <p>--Create a form here to get stoack quantity to decrease</p>
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>

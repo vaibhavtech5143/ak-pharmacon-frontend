@@ -17,31 +17,12 @@ export class ProductHomeComponent {
   showBatch = false
   visibleBatchProductId: any;
   // createProductForm!: FormGroup;
-
+  productDataInModal:any;
   constructor(
     private productService: ProductService,
     private modalService: NgbModal
   ) { }
-  open(content: any, product: any) {
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then(
-      (result) => {
-        this.closeResult = `Closed with: ${result}`;
-      },
-      (reason) => {
-        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-      },
-    );
-  }
-
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return `with: ${reason}`;
-    }
-  }
+  
   productAlerts = {
     failedToCreateProdut: true,
     productCreated: false
@@ -117,24 +98,34 @@ export class ProductHomeComponent {
     })
   }
 
-  openClearStockModal(clearStockModal: any) {
-
-    this.modalService.open(clearStockModal, { ariaLabelledBy: 'modal-basic-title' }).result.then(
+  
+  openClearStockModal(content: any, product: any,batch:any) {
+    this.productDataInModal = {
+      ...product,...batch
+    };
+    console.log('Data in modal',this.productDataInModal);
+    
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then(
       (result) => {
-        console.log('modal closed with', result);
+        this.closeResult = `Closed with: ${result}`;
       },
       (reason) => {
-        console.log('dismissed with', reason);
-
+        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
       },
-    )
-    // this.modalOrderId = orderId;
-    // this.modalOrderStatus = 'canceled';
-    // .result.then((result) => {
-    //   this.closeResult = `Closed with: ${result}`;
-    // }, (reason) => {
-    //   this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    // });
+    ).finally(()=>{
+      this.productDataInModal = null;
+    });
+  }
+
+  private getDismissReason(reason: any): string {
+    this.productDataInModal = null;
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
   }
 
   updateBatchStock(productId: any, batchInfo: any) {
