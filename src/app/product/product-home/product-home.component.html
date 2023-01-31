@@ -1,4 +1,4 @@
-<section class="p-4">
+<div class="p-4">
   <app-error-success *ngIf="productAlerts.failedToCreateProdut && false" [data]="productCreationFailureInfo"
     (close)="productAlerts.failedToCreateProdut=!productAlerts.failedToCreateProdut">
   </app-error-success>
@@ -106,6 +106,7 @@
             <button class="btn btn-success my-4" (click)="visibleBatchProductId=product._id">
               Show Batch
             </button>
+            <button class="btn btn-lg btn-outline-primary" (click)="open(content,product)">Launch demo modal</button>
           </div>
           <div class="row p-4">
             <div class="col-12 col-sm-6">
@@ -151,9 +152,7 @@
                 <p><b>Total Tax</b>: {{batch?.totalTax}}</p>
                 <p><b>Final Amount</b>: {{batch?.finalAmount}}</p>
               </div>
-              <button class="btn-secondary" (click)="openClearStockModal(clearStockModal)">
-                Clear Stock
-              </button>
+
             </div>
           </div>
 
@@ -165,20 +164,24 @@
 
 
 
-</section>
+</div>
 
 
 
 
-<ng-template #clearStockModal let-modal>
+<ng-template #content let-modal>
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
     <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
   </div>
   <div class="modal-body">
-    modal content
+
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
   </div>
 </ng-template>
+
+
+
+<hr />

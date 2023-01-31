@@ -1,15 +1,18 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AlertType } from 'src/app/shared/error-success/error-success.component';
 import { ProductService } from '../services/product.service';
+import { of } from 'rxjs';
+
 
 @Component({
   selector: 'app-product-home',
   templateUrl: './product-home.component.html',
-  styleUrls: ['./product-home.component.scss']
+  styleUrls: ['./product-home.component.scss'],
 })
 export class ProductHomeComponent {
+  closeResult = '';
   allProductsData: any;
   showBatch = false
   visibleBatchProductId: any;
@@ -18,19 +21,39 @@ export class ProductHomeComponent {
   constructor(
     private productService: ProductService,
     private modalService: NgbModal
-  ){}
+  ) { }
+  open(content: any, product: any) {
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then(
+      (result) => {
+        this.closeResult = `Closed with: ${result}`;
+      },
+      (reason) => {
+        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      },
+    );
+  }
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
+  }
   productAlerts = {
     failedToCreateProdut: true,
     productCreated: false
   }
 
   productCreationFailureInfo = {
-    type : AlertType.error, 
-    message :'Form submitted successfull'
+    type: AlertType.error,
+    message: 'Form submitted successfull'
   }
 
 
-  productStructure = { 
+  productStructure = {
     "name": "string9",
     "company": "63d3754bce8d98b8c4263228",
     "productType": "syrup",
@@ -47,15 +70,15 @@ export class ProductHomeComponent {
   ]
 
   // initializeFormGroup(){
-    createProductForm = new FormGroup({
-      name : new FormControl('Ramndom', Validators.required),
-      company : new FormControl('', 
-        [Validators.required]
-      ),
-      productCategory : new FormControl(''),
-      productType : new FormControl('',Validators.required),
-      hsnCode : new FormControl('', Validators.required),
-    });
+  createProductForm = new FormGroup({
+    name: new FormControl('', Validators.required),
+    company: new FormControl('',
+      [Validators.required]
+    ),
+    productCategory: new FormControl(''),
+    productType: new FormControl('', Validators.required),
+    hsnCode: new FormControl('', Validators.required),
+  });
   // };
 
   // get createProductFormControl(){
@@ -78,32 +101,32 @@ export class ProductHomeComponent {
     return this.createProductForm.get('hsnCode');
   }
 
-  createProduct(){
+  createProduct() {
     console.log('callig create product api');
-    if(this.createProductForm.invalid){
+    if (this.createProductForm.invalid) {
       console.log('form is invalid');
       this.createProductForm.markAllAsTouched();
       return;
     }
-    
-    this.productService.createProduct(this.createProductForm.value).subscribe((data)=>{
-      console.log('CreatedProduct: ',data);
+
+    this.productService.createProduct(this.createProductForm.value).subscribe((data) => {
+      console.log('CreatedProduct: ', data);
       this.createProductForm.reset();
-    },(error)=>{
-      console.error('Error occured',error);
+    }, (error) => {
+      console.error('Error occured', error);
     })
   }
 
-  openClearStockModal(clearStockModal:any) {
+  openClearStockModal(clearStockModal: any) {
 
     this.modalService.open(clearStockModal, { ariaLabelledBy: 'modal-basic-title' }).result.then(
-			(result) => {
-				console.log('modal closed with',result);
-			},
+      (result) => {
+        console.log('modal closed with', result);
+      },
       (reason) => {
-				console.log('dismissed with', reason);
-        
-			},
+        console.log('dismissed with', reason);
+
+      },
     )
     // this.modalOrderId = orderId;
     // this.modalOrderStatus = 'canceled';
@@ -114,7 +137,7 @@ export class ProductHomeComponent {
     // });
   }
 
-  updateBatchStock(productId:any,batchInfo:any){
+  updateBatchStock(productId: any, batchInfo: any) {
     // productId,batchInfo
     // batchNumber, productId
     // {
@@ -128,24 +151,24 @@ export class ProductHomeComponent {
     // }
   }
 
-  clearStock(){
+  clearStock() {
 
   }
 
-  getAllProducts(){
+  getAllProducts() {
     // this.allProductsData = 
-    this.productService.getAllProducts().subscribe(data=>{
+    this.productService.getAllProducts().subscribe(data => {
       console.log('all product data: ', data);
-      
+
       this.allProductsData = data;
     },
-    error => {
-      console.log('could not get all product data',error);
-      
-    })
+      error => {
+        console.log('could not get all product data', error);
+
+      })
   }
 
-  ngOnInit(){
+  ngOnInit() {
     // this.getAllProducts()
   }
 }
