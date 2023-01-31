@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { productUrl } from './urls/angular.url'
+import { productUrl, billingUrl } from './urls/angular.url'
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -7,4 +7,5 @@ import { productUrl } from './urls/angular.url'
 })
 export class AppComponent {
   productUrl = productUrl;
+  billingUrl = billingUrl;
 }
