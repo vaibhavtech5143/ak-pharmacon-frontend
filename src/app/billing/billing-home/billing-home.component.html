@@ -1,90 +1,53 @@
-<div>
-    <div>
-        <h1>Create Bill</h1>
-        <form [formGroup]="createBillForm" (ngSubmit)="createBill()">
-            <div class="form-group row">
-              <label for="product-name" class="col-sm-2 col-form-label">Product Name</label>
-              <div class="col-sm-10">
-                <input 
-                  type="text" 
-                  class="form-control"
-                  [class.is-invalid]="createBillForm.get('name')?.invalid && createBillForm.get('name')?.touched"
-                  id="product-name" 
-                  placeholder="Product Name"
-                  formControlName="name"
-                  >
-                  <small 
-                      [class.d-none]="createBillForm.get('name')?.valid || createBillForm.get('name')?.untouched"
-                      class="text-danger">
-                      Product name is required
-                  </small>
-              </div>
-            </div>
-            <div class="form-group row">
-              <label for="company-name" class="col-sm-2 col-form-label">Company Name</label>
-              <div class="col-sm-10">
-                <input 
-                  type="text" 
-                  class="form-control" 
-                  [class.is-invalid]="createBillForm.get('company')?.invalid && createBillForm.get('company')?.touched"
-                  id="company-name" 
-                  placeholder="Company Name" 
-                  formControlName="company"
-                  >
-                  <small 
-                      [class.d-none]="createBillForm.get('company')?.valid || createBillForm.get('company')?.untouched"
-                      class="text-danger">
-                      Company name is required
-                  </small>
-              </div>
-            </div>
-            <div class="form-group row">
-              <label for="product-type" class="col-sm-2 col-form-label">Product Type</label>
-              <div class="col-sm-10">
-                <input 
-                  type="text" 
-                  class="form-control" 
-                  [class.is-invalid]="createBillForm.get('productType')?.invalid && createBillForm.get('productType')?.touched"
-                  id="product-type" 
-                  placeholder="Product Type" 
-                  formControlName="productType"
-                  >
-                  <small 
-                      [class.d-none]="createBillForm.get('productType')?.valid || createBillForm.get('productType')?.untouched"
-                      class="text-danger">
-                      Product type is required
-                  </small>
-              </div>
-            </div>
-            <div class="form-group row">
-              <label for="product-category" class="col-sm-2 col-form-label">Product Category</label>
-              <div class="col-sm-10">
-                <input type="text" class="form-control" id="product-category" placeholder="Product Category" formControlName="productCategory">
-              </div>
-            </div>
-            <div class="form-group row">
-              <label for="hsnCode" class="col-sm-2 col-form-label">HSN Code</label>
-              <div class="col-sm-10">
-                <input 
-                  type="text" 
-                  class="form-control" 
-                  [class.is-invalid]="createBillForm.get('hsnCode')?.invalid && createBillForm.get('hsnCode')?.touched"
-                  id="hsnCode" 
-                  placeholder="HSN Code" 
-                  formControlName="hsnCode"
-                  >
-                  <small 
-                      [class.d-none]="createBillForm.get('hsnCode')?.valid || createBillForm.get('hsnCode')?.untouched"
-                      class="text-danger">
-                      HSN code is required
-                  </small>
-              </div>
-            </div>
-            <div class="form-group row">
-              <div class="col-sm-10">
-                <button type="submit" class="btn btn-primary">Create Product</button>
-              </div>
-            </div>
-          </form>
-    </div>
+<div class="card" style="width: 1200px">
+  <h3>Listing Invoice</h3>
+  <div class="card-header">
+    <a class="btn btn-success" routerLink="createinvoice">Create New [+]</a>
+  </div>
+  <div class="card-body">
+
+    <table class="table table-bordered">
+      <thead class="bg-dark text-white">
+        <tr>
+          <td>Invoice No</td>
+          <td>Customer</td>
+          <td>Remarks</td>
+          <td>Total</td>
+          <td>Tax</td>
+          <td>NetTotal</td>
+          <td>Action</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td style=" width: 30%">
+            <a class="btn btn-primary">Edit</a> |
+            <a class="btn btn-danger">Delete</a> |
+            <a class="btn btn-success">Print</a> |
+            <a class="btn btn-success">Download</a>
+          </td>
+
+        </tr>
+      </tbody>
+
+    </table>
+
+  </div>
+
 </div>
+
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Preview Invoice : <b>{{"invoiceno"}}</b></h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')"></button>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-danger" (click)="d('Cross click')">Close</button>
+  </div>
+</ng-template>
