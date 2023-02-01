@@ -1,4 +1,4 @@
-<form class="container" [formGroup]="invoiceForm" (ngSubmit)="createBill()">
+<form class="container" [formGroup]="createBillForm" (ngSubmit)="createBill()">
     <div class=" card" style="width: 1200px">
         <h3>{{pagetitle}}</h3>
 
@@ -52,7 +52,7 @@
                                 <td>Sl.No</td>
                                 <td style="width: 20%">Product Code</td>
                                 <td>Description</td>
-                                <td>Qty</td>
+                                <td>quantity</td>
                                 <td>Price</td>
                                 <td>Total</td>
                                 <td>Action</td>
@@ -63,8 +63,8 @@
                                 <tr [formGroupName]="i">
                                     <td></td>
                                     <td>
-                                        <select class="form-control" formControlName="productCode">
-                                            <option>Choose an option</option>
+                                        <select class="form-control" formControlName="name">
+                                            <option>Choose product name</option>
                                             <option value="html">HTML</option>
                                             <option value="java">JAVA</option>
                                             <option value="C++">C++</option>
@@ -73,16 +73,13 @@
                                         </select>
                                     </td>
                                     <td>
-                                        <input class="form-control" formControlName="productName" />
+                                        <input class="form-control" formControlName="batchNumber" placeholder="Batch Number"/>
                                     </td>
                                     <td>
-                                        <input class="form-control" formControlName="qty" />
+                                        <input class="form-control" formControlName="free" />
                                     </td>
                                     <td>
-                                        <input class="form-control" formControlName="salesPrice" />
-                                    </td>
-                                    <td>
-                                        <input class="form-control" formControlName="total" />
+                                        <input class="form-control" formControlName="discountPercent" />
                                     </td>
                                     <td>
                                         <span class="btn btn-danger" (click)="deleteProduct(i)">Remove</span>
