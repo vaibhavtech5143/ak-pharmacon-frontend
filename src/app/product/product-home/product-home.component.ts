@@ -7,6 +7,8 @@ import { of } from 'rxjs';
 import { ReactiveFormsModule } from '@angular/forms';
 
 
+
+
 @Component({
   selector: 'app-product-home',
   templateUrl: './product-home.component.html',
@@ -23,7 +25,6 @@ export class ProductHomeComponent {
     private productService: ProductService,
     private modalService: NgbModal
   ) { }
-
   productAlerts = {
     failedToCreateProdut: true,
     productCreated: false

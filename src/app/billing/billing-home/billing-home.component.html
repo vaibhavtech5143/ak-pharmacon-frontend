@@ -1,0 +1,53 @@
+<div class="card" style="width: 1200px">
+  <h3>Listing Invoice</h3>
+  <div class="card-header">
+    <a class="btn btn-success" routerLink="createinvoice">Create New [+]</a>
+  </div>
+  <div class="card-body">
+
+    <table class="table table-bordered">
+      <thead class="bg-dark text-white">
+        <tr>
+          <td>Invoice No</td>
+          <td>Customer</td>
+          <td>Remarks</td>
+          <td>Total</td>
+          <td>Tax</td>
+          <td>NetTotal</td>
+          <td>Action</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td style=" width: 30%">
+            <a class="btn btn-primary">Edit</a> |
+            <a class="btn btn-danger">Delete</a> |
+            <a class="btn btn-success">Print</a> |
+            <a class="btn btn-success">Download</a>
+          </td>
+
+        </tr>
+      </tbody>
+
+    </table>
+
+  </div>
+
+</div>
+
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Preview Invoice : <b>{{"invoiceno"}}</b></h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')"></button>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-danger" (click)="d('Cross click')">Close</button>
+  </div>
+</ng-template>
