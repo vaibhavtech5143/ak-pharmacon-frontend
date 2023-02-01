@@ -1,0 +1,137 @@
+<form class="container" [formGroup]="invoiceForm" (ngSubmit)="createBill()">
+    <div class=" card" style="width: 1200px">
+        <h3>{{pagetitle}}</h3>
+
+        <div class="card-body">
+
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label>Invoice No</label>
+                        <span class="text-danger">*</span>
+                        <input formControlName="invoiceNo" class="form-control" />
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label>Customer</label>
+                        <span class="text-danger">*</span>
+                        <select formControlName="customerId" class="form-control">
+                            <option>Choose an option</option>
+                            <option value="html">HTML</option>
+                            <option value="java">JAVA</option>
+                            <option value="C++">C++</option>
+                            <option value="php">PHP</option>
+                            <option value="perl">PERL</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label>Address</label>
+                        <textarea formControlName="deliveryAddress" class="form-control"></textarea>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label>Remarks</label>
+                        <textarea formControlName="remarks" class="form-control"></textarea>
+                    </div>
+                </div>
+
+            </div>
+            <br>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <table class="table table-bordered">
+
+                        <thead class="bg-primary text-white">
+                            <tr>
+                                <td>Sl.No</td>
+                                <td style="width: 20%">Product Code</td>
+                                <td>Description</td>
+                                <td>Qty</td>
+                                <td>Price</td>
+                                <td>Total</td>
+                                <td>Action</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ng-container formArrayName="details"  *ngFor="let detail of getDetails.controls; let i = index">
+                                <tr [formGroupName]="i">
+                                    <td></td>
+                                    <td>
+                                        <select class="form-control" formControlName="productCode">
+                                            <option>Choose an option</option>
+                                            <option value="html">HTML</option>
+                                            <option value="java">JAVA</option>
+                                            <option value="C++">C++</option>
+                                            <option value="php">PHP</option>
+                                            <option value="perl">PERL</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <input class="form-control" formControlName="productName" />
+                                    </td>
+                                    <td>
+                                        <input class="form-control" formControlName="qty" />
+                                    </td>
+                                    <td>
+                                        <input class="form-control" formControlName="salesPrice" />
+                                    </td>
+                                    <td>
+                                        <input class="form-control" formControlName="total" />
+                                    </td>
+                                    <td>
+                                        <span class="btn btn-danger" (click)="deleteProduct(i)">Remove</span>
+                                    </td>
+
+                                </tr>
+                            </ng-container>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="6">
+                                    <span class="btn btn-success" (click)="addProduct()">[+]</span>
+                                </td>
+                            </tr>
+                        </tfoot>
+
+                    </table>
+                </div>
+
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label>Summary Total</label>
+                        <input formControlName="total" class="form-control">
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label>Summary Tax</label>
+                        <input formControlName="tax" class="form-control">
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label>Summary NetTotal</label>
+                        <input formControlName="netTotal" class="form-control">
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <br>
+                    <button class="btn btn-success" type="submit">Save</button> |
+                    <a class="btn btn-danger" routerLink="/">Back</a>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</form>
