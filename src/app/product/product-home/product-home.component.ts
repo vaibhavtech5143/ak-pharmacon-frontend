@@ -4,6 +4,7 @@ import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AlertType } from 'src/app/shared/error-success/error-success.component';
 import { ProductService } from '../services/product.service';
 import { of } from 'rxjs';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @Component({
@@ -17,12 +18,12 @@ export class ProductHomeComponent {
   showBatch = false
   visibleBatchProductId: any;
   // createProductForm!: FormGroup;
-  productDataInModal:any;
+  productDataInModal: any;
   constructor(
     private productService: ProductService,
     private modalService: NgbModal
   ) { }
-  
+
   productAlerts = {
     failedToCreateProdut: true,
     productCreated: false
@@ -98,13 +99,13 @@ export class ProductHomeComponent {
     })
   }
 
-  
-  openClearStockModal(content: any, product: any,batch:any) {
+
+  openClearStockModal(content: any, product: any, batch: any) {
     this.productDataInModal = {
-      ...product,...batch
+      ...product, ...batch
     };
-    console.log('Data in modal',this.productDataInModal);
-    
+    console.log('Data in modal', this.productDataInModal);
+
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then(
       (result) => {
         this.closeResult = `Closed with: ${result}`;
@@ -112,7 +113,7 @@ export class ProductHomeComponent {
       (reason) => {
         this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
       },
-    ).finally(()=>{
+    ).finally(() => {
       this.productDataInModal = null;
     });
   }
@@ -162,4 +163,17 @@ export class ProductHomeComponent {
   ngOnInit() {
     // this.getAllProducts()
   }
+
+
+  removedStockProduct = new FormGroup({
+    RemovedStock: new FormControl(""),
+    // console.log(this.removedStockProduct.value)
+
+  });
+
+  updateStock() {
+    console.log(this.removedStockProduct.value);
+
+  }
+
 }

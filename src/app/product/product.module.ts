@@ -7,6 +7,7 @@ import { SharedModule } from '../shared/shared.module';
 
 
 
+
 @NgModule({
   declarations: [
     ProductHomeComponent
@@ -14,7 +15,7 @@ import { SharedModule } from '../shared/shared.module';
   imports: [
     CommonModule,
     ProductRoutingModule,
-    SharedModule
+    SharedModule,
   ],
   providers: [
     ProductService

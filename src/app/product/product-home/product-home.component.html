@@ -12,7 +12,7 @@
           <div class="col-sm-10">
             <input type="text" class="form-control"
               [class.is-invalid]="createProductForm.get('name')?.invalid && createProductForm.get('name')?.touched"
-              id="product-name" placeholder="VAIBHAV" formControlName="name">
+              id="product-name" placeholder="Product Name" formControlName="name">
             <small [class.d-none]="createProductForm.get('name')?.valid || createProductForm.get('name')?.untouched"
               class="text-danger">
               Product name is required
@@ -88,13 +88,20 @@
 
   <!-- product list -->
   <div>
-    <h1>Product List</h1>
-    <button class="btn btn-success my-4" (click)="getAllProducts()">
-      Get Product
-    </button>
+    <div class="container-fluid">
+      <h1>Product List</h1>
+      <form class="form-inline">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
+        <button class="btn btn-success mx-3 my-4" (click)="getAllProducts()">
+          Get Product
+        </button>
+      </form>
 
 
 
+
+    </div>
     <div *ngIf="allProductsData" class="animated fadeIn">
       <h5>Total Products : {{allProductsData.length}}</h5>
       <ul class="list-group mb-4" *ngFor="let product of allProductsData; let i = index">
@@ -148,7 +155,8 @@
                 <p><b>Total Amount Excluding Tax</b>: {{batch?.totalAmountExcludingTax}}</p>
                 <p><b>Total Tax</b>: {{batch?.totalTax}}</p>
                 <p><b>Final Amount</b>: {{batch?.finalAmount}}</p>
-                <button class="btn btn-lg btn-outline-primary" (click)="openClearStockModal(content,product,batch)">Clear Stock</button>
+                <button class="btn btn-lg btn-outline-danger" (click)="openClearStockModal(content,product,batch)">Clear
+                  Stock</button>
               </div>
 
             </div>
@@ -168,24 +176,29 @@
 
 
 <ng-template #content let-modal>
-  <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Stock Update</h4>
-    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
-  </div>
-  <div class="modal-body">
-    <p>
-      Product: {{productDataInModal?.name}}
-    </p>
-    <p>
-      Batch: {{productDataInModal?.batchNumber}}
-    </p>
-    <p>
-      Available Quantity: {{productDataInModal?.saleQuantity}}
-    </p>
-    <p>--Create a form here to get stoack quantity to decrease</p>
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+  <div class="container container-fluid my-3 mx-4">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Stock Update</h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')">X</button>
+    </div>
+    <div class="modal-body" data-backdrop="static" data-keyboard="false">
+      <p>
+        Product: {{productDataInModal?.name}}
+      </p>
+      <p>
+        Batch: {{productDataInModal?.batchNumber}}
+      </p>
+      <p>
+        Available Quantity: {{productDataInModal?.saleQuantity}}
+      </p>
+      <form [formGroup]="removedStockProduct" (ngSubmit)="updateStock()">
+        <input type="number" placeholder="Qty To Remove" name="RemovedStock" formControlName="RemovedStock">
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-success"
+        (click)="modal.close('Save click');updateStock()">Save</button>
+    </div>
   </div>
 </ng-template>
 
