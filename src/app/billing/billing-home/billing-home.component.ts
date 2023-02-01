@@ -11,11 +11,11 @@ export class BillingHomeComponent {
 
   productData:any;
   constructor(
-    private readonly productService: ProductService
+    // private readonly productService: ProductService
   ){}
 
   createBillForm = new FormGroup({
-    name : new FormControl('Ramndom', Validators.required),
+    name : new FormControl('', Validators.required),
     company : new FormControl('', 
       [Validators.required]
     ),
@@ -58,10 +58,10 @@ export class BillingHomeComponent {
   }
 
   ngOnInit(){
-    this.productService.getAllProducts().subscribe(
-      data=>{
+    // this.productService.getAllProducts().subscribe(
+    //   data=>{
 
-      }
-    )
+    //   }
+    // )
   }
 }
