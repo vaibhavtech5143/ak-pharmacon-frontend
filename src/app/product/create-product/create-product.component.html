@@ -1,0 +1,191 @@
+<div class="container-fluid animated fadeIn">
+  <app-error-success
+    *ngIf="failedToGetCompanyAlert"
+    [data]="failedToGetCompanyAlertInfo"
+    (close)="failedToGetCompanyAlert = !failedToGetCompanyAlert"
+  >
+  </app-error-success>
+
+  <div *ngIf="companyList">
+    <form
+      [formGroup]="createProductForm"
+      (ngSubmit)="createProduct()"
+      *ngIf="createProductFormUi"
+    >
+      <h1>Create Product</h1>
+      <div class="form-group row">
+        <label for="product-name" class="col-sm-2 col-form-label"
+          >Product Name</label
+        >
+        <div class="col-sm-10">
+          <input
+            type="text"
+            class="form-control"
+            [class.is-invalid]="
+              createProductForm.get('name')?.invalid &&
+              createProductForm.get('name')?.touched
+            "
+            id="product-name"
+            placeholder="Product Name"
+            formControlName="name"
+          />
+          <small
+            [class.d-none]="
+              createProductForm.get('name')?.valid ||
+              createProductForm.get('name')?.untouched
+            "
+            class="text-danger"
+          >
+            Product name is required
+          </small>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="company-name" class="col-sm-2 col-form-label"
+          >Company Name</label
+        >
+        <div class="col-sm-10">
+          <select
+            class="form-control"
+            id="company-name"
+            formControlName="company"
+          >
+            <option
+              selected
+              [value]="company._id"
+              *ngFor="let company of companyList"
+            >
+              {{ company.name }}
+            </option>
+          </select>
+          <small
+            [class.d-none]="
+              createProductForm.get('company')?.valid ||
+              createProductForm.get('company')?.untouched
+            "
+            class="text-danger"
+          >
+            Company name is required
+          </small>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="product-type" class="col-sm-2 col-form-label"
+          >Product Type</label
+        >
+        <div class="col-sm-10">
+          <select
+            class="form-control"
+            [class.is-invalid]="
+              createProductForm.get('productType')?.invalid &&
+              createProductForm.get('productType')?.touched
+            "
+            id="product-type"
+            formControlName="productType"
+          >
+            <option [value]="null">Select</option>
+            <option *ngFor="let type of productTypes">
+              {{ type }}
+            </option>
+          </select>
+          <small
+            [class.d-none]="
+              createProductForm.get('productType')?.valid ||
+              createProductForm.get('productType')?.untouched
+            "
+            class="text-danger"
+          >
+            Product type is required
+          </small>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="product-category" class="col-sm-2 col-form-label"
+          >Product Category</label
+        >
+        <div class="col-sm-10">
+          <select
+            class="form-control"
+            id="product-category"
+            formControlName="productCategory"
+          >
+            <option [value]="null">Select</option>
+            <option *ngFor="let category of productCategories">
+              {{ category }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="hsnCode" class="col-sm-2 col-form-label">HSN Code</label>
+        <div class="col-sm-10">
+          <input
+            type="text"
+            class="form-control"
+            [class.is-invalid]="
+              createProductForm.get('hsnCode')?.invalid &&
+              createProductForm.get('hsnCode')?.touched
+            "
+            id="hsnCode"
+            placeholder="HSN Code"
+            formControlName="hsnCode"
+          />
+          <small
+            [class.d-none]="
+              createProductForm.get('hsnCode')?.valid ||
+              createProductForm.get('hsnCode')?.untouched
+            "
+            class="text-danger"
+          >
+            HSN code is required
+          </small>
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-sm-10">
+          <app-error-success
+            *ngIf="productAlerts.failedToCreateProduct"
+            [data]="productCreationFailureInfo"
+            (close)="
+              productAlerts.failedToCreateProduct =
+                !productAlerts.failedToCreateProduct
+            "
+          >
+          </app-error-success>
+          <app-error-success
+            *ngIf="productAlerts.productCreated"
+            [data]="productCreationSuccessInfo"
+            (close)="
+              productAlerts.productCreated = !productAlerts.productCreated
+            "
+          >
+          </app-error-success>
+          <app-loader
+            *ngIf="createProductLoader"
+            [data]="{ type: 'full' }"
+          ></app-loader>
+          <button type="submit" class="btn btn-primary">Create Product</button>
+        </div>
+      </div>
+    </form>
+    <!-- createProductFormUi -->
+    <div class="text-center" *ngIf="!createProductFormUi || true">
+      <button class="btn btn-primary mr-2 my-2" (click)="goToCreateBatch()">
+        Add batch for {{ createdProduct?.name }}
+      </button>
+      <button
+        class="btn btn-success mr-2 my-2"
+        (click)="createProductFormUi = true"
+      >
+        Add more products
+      </button>
+      <button class="btn btn-secondary my-2" routerLink="{{ productHomeUrl }}">
+        Goto product page
+      </button>
+    </div>
+  </div>
+</div>
+
+<ng-container>
+  <app-loader *ngIf="!companyList" [data]="{ type: 'full' }"></app-loader>
+</ng-container>

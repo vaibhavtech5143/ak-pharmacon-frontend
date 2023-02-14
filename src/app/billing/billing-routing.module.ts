@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { BillingHomeComponent } from './billing-home/billing-home.component';
-import { CreateinvoiceComponent } from '../billing/createinvoice/createinvoice.component';
+import { CreateBillComponent } from './create-bill/create-bill.component';
 
 const routes: Routes = [
   {
@@ -10,10 +10,10 @@ const routes: Routes = [
     component: BillingHomeComponent
   },
   {
-    component: CreateinvoiceComponent, path: "createinvoice",
+    component: CreateBillComponent, path: "createinvoice",
   },
   // {
-  //   component: CreateinvoiceComponent, path: "editinvoice/:invoiceno",
+  //   component: CreateBillComponent, path: "editinvoice/:invoiceno",
 
   // },
 ]

@@ -1,0 +1,302 @@
+<div class="container-fluid animated fadeIn">
+  <div class="cardd">
+    <h3 class="px-4">{{ pagetitle }}</h3>
+
+    <div class="card-bodyy">
+      <div class="client-form-container">
+        <input
+          type="text"
+          (keyup)="onClientNameSearch($event)"
+          (focus)="onClientNameFocus()"
+          class="form-control"
+          placeholder="Search Medical"
+        />
+
+        <div
+          *ngIf="clientSearchedAvailableOptions.length > 0"
+          class="client-form-dropdown-container"
+        >
+          <div
+            class="border border-bottom bg-white"
+            *ngFor="let client of clientSearchedAvailableOptions"
+            (click)="onClientNameSelect(client)"
+          >
+            <div style="cursor: pointer" class="p-1">
+              <b>
+                {{ client?.name | titlecase }}
+              </b>
+              <span class="muted">
+                , {{ client?.address1 }},
+                {{ client?.address2 }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row my-4 animated fadeIn" *ngIf="selectedClient">
+        <div class="col-lg-6">
+          <div class="form-group">
+            <p class="h5">Client Name</p>
+            <b>{{ selectedClient?.name | titlecase }}</b>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div>
+            <p class="h5">Address</p>
+            <p>
+              {{ selectedClient?.address1 }}, {{ selectedClient?.address2 }}
+            </p>
+          </div>
+        </div>
+      </div>
+      <!-- style="max-width: 90vw; overflow-x: scroll" -->
+      <div *ngIf="selectedClient" class="animated fadeIn">
+        <button
+          class="btn btn-success mb-1 d-block"
+          [disabled]="newProductUi"
+          (click)="newProductUi = true"
+        >
+          Add Product
+        </button>
+        <table
+          class="table table-bordered animated fadeIn"
+          *ngIf="billDetail.products.length"
+        >
+          <thead class="bg-secondary text-white">
+            <tr>
+              <td>Product Name</td>
+              <td>Batch</td>
+              <td>Quantity</td>
+              <td>Discount %</td>
+              <td>Free</td>
+              <td>Expiry</td>
+              <td>Rate</td>
+              <td>MRP</td>
+              <td>Tax</td>
+              <td>Total Amount</td>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-container
+              *ngFor="let product of billDetail.products; let i = index"
+            >
+              <tr>
+                <td>{{ product.name }}</td>
+                <td>{{ product.batchNumber }}</td>
+                <td>{{ product.quantity }}</td>
+                <td>{{ product.discountPercent }}</td>
+                <td>{{ product.free }}</td>
+                <td>{{ product.expirydate | date }}</td>
+                <td>{{ product.rate |number: '1.0-2' }}</td>
+                <td>{{ product.mrp |number: '1.0-2' }}</td>
+                <td>{{ product.totalTax |number: '1.0-2'}}</td>
+                <td>{{ product.totalAmount |number: '1.0-2' }}</td>
+              </tr>
+            </ng-container>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td><b>Tax</b>: {{ this?.billDetail?.totalTaxAmount |number: '1.0-2' }}</td>
+              <td><b>Amount</b>: {{ this?.billDetail?.totalAmountExcludingTax |number: '1.0-2' }}</td>
+              <td colspan="auto">
+                <b>Final Amount</b>: {{ this?.billDetail?.finalAmount |number: '1.0-2' }}
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+        <!-- </div> -->
+
+        <div
+          *ngIf="newProductUi === true"
+          class="animated fadeIn mt-4 border border-muted rounded px-1 py-4"
+        >
+          <h5 class=" mb-4">Enter Product Detail</h5>
+          <div class="row no-gutters">
+            <div class="client-form-container col-12 col-sm-6">
+              <input
+                type="text"
+                (keyup)="onProductNameSearch($event)"
+                (focus)="onProductNameFocus()"
+                class="form-control mr-1"
+                placeholder="Search Product"
+              />
+              <div
+                *ngIf="productSearchedAvailableOptions?.length > 0"
+                class="client-form-dropdown-container"
+              >
+                <div
+                  class="border border-bottom bg-white"
+                  *ngFor="let product of productSearchedAvailableOptions"
+                  (click)="onProductNameSelect(product)"
+                >
+                  <div class="p-1" style="cursor: pointer">
+                    <b>
+                      {{ product?.name }}
+                    </b>
+                    <span class="muted">
+                      {{ product?.stockQuantity || 0 }}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="client-form-container col-12 col-sm-6"
+              *ngIf="selectedProduct"
+            >
+              <input
+                type="text"
+                (keyup)="onBatchNameSearch($event)"
+                (focus)="onBatchNameFocus()"
+                class="form-control"
+                placeholder="Search Batch Number"
+              />
+              <div
+                *ngIf="batchSearchedAvailableOptions?.length > 0"
+                class="client-form-dropdown-container"
+              >
+                <div
+                  class="border border-bottom bg-white"
+                  *ngFor="let batch of batchSearchedAvailableOptions"
+                  (click)="onBatchNameSelect(batch)"
+                >
+                  <div class="p-1" style="cursor: pointer">
+                    <b>
+                      {{ batch?.batchNumber }}
+                    </b>
+                    <span class="muted">
+                      Quantity: {{ batch?.saleQuantity || 0 }}
+                    </span>
+                    <span class="muted">
+                      Expiry: {{ batch?.expirydate | date }}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row no-gutters mt-2">
+            <div
+              class="col-12 col-sm-6"
+              [ngClass]="{
+                border: !selectedProduct,
+                'border-danger': !selectedProduct
+              }"
+            >
+              <p><b>Product</b>: {{ selectedProduct?.name }}</p>
+            </div>
+            <div
+              class="col-12 col-sm-6"
+              [ngClass]="{
+                border: !selectedBatch,
+                'border-danger': !selectedBatch
+              }"
+              *ngIf="selectedProduct"
+            >
+              <p><b>Batch</b>: {{ selectedBatch?.batchNumber }}</p>
+              <p><b>Expiry</b>: {{ selectedBatch?.expirydate | date }}</p>
+              <p><b>MRP</b>: {{ selectedBatch?.mrp }}</p>
+              <p>
+                <b>Available Quantity</b>: {{ selectedBatch?.saleQuantity }}
+              </p>
+            </div>
+          </div>
+          <!-- this.productForm.get('quantity') -->
+
+          <form
+            [formGroup]="productForm"
+            (ngSubmit)="addProduct()"
+            *ngIf="selectedProduct && selectedBatch"
+            class="animated fadeIn"
+          >
+            <div class="row">
+              <div class="col-4">
+                <label>Quantity</label>
+                <input
+                  class="form-control"
+                  formControlName="quantity"
+                  type="number"
+                  placeholder="Quantity"
+                  (focusout)="selectedBatchCalculations()"
+                  [class.is-invalid]="
+                    productForm.get('quantity')?.invalid &&
+                    productForm.get('quantity')?.touched
+                  "
+                />
+                <small
+                  [class.d-none]="
+                    productForm.get('quantity')?.valid ||
+                    productForm.get('quantity')?.untouched
+                  "
+                  class="text-danger"
+                >
+                  Product Quantity is invalid
+                </small>
+              </div>
+              <div class="col-4">
+                <label>Free</label>
+                <input
+                  class="form-control"
+                  formControlName="free"
+                  placeholder="Free"
+                  type="number"
+                  [class.is-invalid]="
+                    productForm.get('free')?.invalid &&
+                    productForm.get('free')?.touched
+                  "
+                />
+                <small
+                  [class.d-none]="
+                    productForm.get('free')?.valid ||
+                    productForm.get('free')?.untouched
+                  "
+                  class="text-danger"
+                >
+                  Invalid input
+                </small>
+              </div>
+              <div class="col-4">
+                <label>Discount %</label>
+                <input
+                  class="form-control"
+                  formControlName="discountPercent"
+                  placeholder="Discount % Do we need this?"
+                  type="number"
+                  [class.is-invalid]="
+                    productForm.get('discountPercent')?.invalid &&
+                    productForm.get('discountPercent')?.touched
+                  "
+                />
+                <small
+                  [class.d-none]="
+                    productForm.get('discountPercent')?.valid ||
+                    productForm.get('discountPercent')?.untouched
+                  "
+                  class="text-danger"
+                >
+                  Discount is invalid
+                </small>
+              </div>
+            </div>
+            <p><b>Amount</b>: {{ selectedBatch?.totalAmountExcludingTax||0 }}</p>
+            <p><b>Tax</b>: {{ selectedBatch?.totalTax||0 |number: '1.0-2' }}</p>
+            <p><b>Total</b>: {{ selectedBatch?.totalAmount||0 |number: '1.0-2' }}</p>
+            <button class="btn btn-primary m-1" [disabled]="productForm.invalid">
+              Add
+            </button>
+          </form>
+        </div>
+        <app-error-success *ngIf="productAlerts.createBillValidationError" [data]="createBillValidationErrorInfo"
+            (close)="productAlerts.createBillValidationError=!productAlerts.createBillValidationError">
+        </app-error-success>
+        <button
+          class="btn btn-success mt-4"
+          [disabled]="billDetail.products.length < 1 || newProductUi"
+          (click)="createBill()"
+        >
+          Create Bill
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

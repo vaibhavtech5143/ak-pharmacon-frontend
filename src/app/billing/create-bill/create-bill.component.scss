@@ -1,0 +1,16 @@
+::ng-deep ngb-modal-backdrop {
+    z-index: 1050 !important;
+}
+
+.client-form-container{
+    position: relative
+}
+
+.client-form-dropdown-container{
+    position: absolute; 
+    top: -5; 
+    z-index: 1;
+    width: 90%;
+    overflow: scroll;
+    max-height: clamp(450px, 65vh, 600px);
+}
