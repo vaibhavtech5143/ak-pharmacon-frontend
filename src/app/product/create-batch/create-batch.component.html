@@ -240,81 +240,166 @@
           />
         </div>
       </div>
+
       <div class="form-group row">
-        <label for="cgstPercent" class="col-sm-2 col-form-label">CGST %</label>
+        <label for="purchaseCgstPercent" class="col-sm-2 col-form-label"
+          >Purchase CGST %</label
+        >
         <div class="col-sm-10">
           <input
-            type="text"
+            type="number"
             class="form-control"
             [class.is-invalid]="
-              addBatchForm.get('cgstPercent')?.invalid &&
-              addBatchForm.get('cgstPercent')?.touched
+              addBatchForm.get('purchaseCgstPercent')?.invalid &&
+              addBatchForm.get('purchaseCgstPercent')?.touched
             "
-            id="cgstPercent"
-            placeholder="cgstPercent"
-            formControlName="cgstPercent"
+            id="purchaseCgstPercent"
+            placeholder="purchaseCgstPercent"
+            formControlName="purchaseCgstPercent"
             (focusout)="calculateTaxAndPrices()"
           />
           <small
             [class.d-none]="
-              addBatchForm.get('cgstPercent')?.valid ||
-              addBatchForm.get('cgstPercent')?.untouched
+              addBatchForm.get('purchaseCgstPercent')?.valid ||
+              addBatchForm.get('purchaseCgstPercent')?.untouched
             "
             class="text-danger"
           >
-            CGST % is required
+            Purchase CGST % is required
           </small>
         </div>
       </div>
       <div class="form-group row">
-        <label for="sgstPercent" class="col-sm-2 col-form-label">SGST %</label>
+        <label for="purchaseSgstPercent" class="col-sm-2 col-form-label">Purchase SGST %</label>
         <div class="col-sm-10">
           <input
-            type="text"
+            type="number"
             class="form-control"
             [class.is-invalid]="
-              addBatchForm.get('sgstPercent')?.invalid &&
-              addBatchForm.get('sgstPercent')?.touched
+              addBatchForm.get('purchaseSgstPercent')?.invalid &&
+              addBatchForm.get('purchaseSgstPercent')?.touched
             "
-            id="sgstPercent"
-            placeholder="sgstPercent"
-            formControlName="sgstPercent"
+            id="purchaseSgstPercent"
+            placeholder="purchaseSgstPercent"
+            formControlName="purchaseSgstPercent"
             (focusout)="calculateTaxAndPrices()"
           />
           <small
             [class.d-none]="
-              addBatchForm.get('sgstPercent')?.valid ||
-              addBatchForm.get('sgstPercent')?.untouched
+              addBatchForm.get('purchaseSgstPercent')?.valid ||
+              addBatchForm.get('purchaseSgstPercent')?.untouched
             "
             class="text-danger"
           >
-            SGST % is required
+            Purchase SGST % is required
           </small>
         </div>
       </div>
       <div class="form-group row">
-        <label for="igstPercent" class="col-sm-2 col-form-label">IGST %</label>
+        <label for="purchaseIgstPercent" class="col-sm-2 col-form-label">Purchase IGST %</label>
         <div class="col-sm-10">
           <input
-            type="text"
+            type="number"
             class="form-control"
             [class.is-invalid]="
-              addBatchForm.get('igstPercent')?.invalid &&
-              addBatchForm.get('igstPercent')?.touched
+              addBatchForm.get('purchaseIgstPercent')?.invalid &&
+              addBatchForm.get('purchaseIgstPercent')?.touched
             "
-            id="igstPercent"
-            placeholder="igstPercent"
-            formControlName="igstPercent"
+            id="purchaseIgstPercent"
+            placeholder="purchaseIgstPercent"
+            formControlName="purchaseIgstPercent"
             (focusout)="calculateTaxAndPrices()"
           />
           <small
             [class.d-none]="
-              addBatchForm.get('igstPercent')?.valid ||
-              addBatchForm.get('igstPercent')?.untouched
+              addBatchForm.get('purchaseIgstPercent')?.valid ||
+              addBatchForm.get('purchaseIgstPercent')?.untouched
             "
             class="text-danger"
           >
-            IGST % is required
+            Purchase IGST % is required
+          </small>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="saleCgstPercent" class="col-sm-2 col-form-label"
+          >Sale CGST %</label
+        >
+        <div class="col-sm-10">
+          <input
+            type="number"
+            class="form-control"
+            [class.is-invalid]="
+              addBatchForm.get('saleCgstPercent')?.invalid &&
+              addBatchForm.get('saleCgstPercent')?.touched
+            "
+            id="saleCgstPercent"
+            placeholder="saleCgstPercent"
+            formControlName="saleCgstPercent"
+          />
+          <small
+            [class.d-none]="
+              addBatchForm.get('saleCgstPercent')?.valid ||
+              addBatchForm.get('saleCgstPercent')?.untouched
+            "
+            class="text-danger"
+          >
+            Sale CGST % is required
+          </small>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="saleSgstPercent" class="col-sm-2 col-form-label"
+          >Sale SGST %</label
+        >
+        <div class="col-sm-10">
+          <input
+            type="number"
+            class="form-control"
+            [class.is-invalid]="
+              addBatchForm.get('saleSgstPercent')?.invalid &&
+              addBatchForm.get('saleSgstPercent')?.touched
+            "
+            id="saleSgstPercent"
+            placeholder="saleSgstPercent"
+            formControlName="saleSgstPercent"
+          />
+          <small
+            [class.d-none]="
+              addBatchForm.get('saleSgstPercent')?.valid ||
+              addBatchForm.get('saleSgstPercent')?.untouched
+            "
+            class="text-danger"
+          >
+            Sale SGST % is required
+          </small>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="saleIgstPercent" class="col-sm-2 col-form-label">
+          Sale IGST %</label
+        >
+        <div class="col-sm-10">
+          <input
+            type="number"
+            class="form-control"
+            [class.is-invalid]="
+              addBatchForm.get('saleIgstPercent')?.invalid &&
+              addBatchForm.get('saleIgstPercent')?.touched
+            "
+            id="saleIgstPercent"
+            placeholder="saleIgstPercent"
+            formControlName="saleIgstPercent"
+          />
+          <small
+            [class.d-none]="
+              addBatchForm.get('saleIgstPercent')?.valid ||
+              addBatchForm.get('saleIgstPercent')?.untouched
+            "
+            class="text-danger"
+          >
+            Sale IGST % is required
           </small>
         </div>
       </div>

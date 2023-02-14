@@ -80,17 +80,32 @@ export class CreateBatchComponent {
       Validators.pattern('^[0-9]*$'),
     ]),
     expirydate: new FormControl('', Validators.required),
-    cgstPercent: new FormControl<number>(0, [
+    saleCgstPercent: new FormControl<number>(0, [
       Validators.required,
       Validators.min(0),
       Validators.pattern('^[0-9]*$'),
     ]),
-    sgstPercent: new FormControl<number>(0, [
+    saleSgstPercent: new FormControl<number>(0, [
       Validators.required,
       Validators.min(0),
       Validators.pattern('^[0-9]*$'),
     ]),
-    igstPercent: new FormControl<number>(0, [
+    saleIgstPercent: new FormControl<number>(0, [
+      Validators.required,
+      Validators.min(0),
+      Validators.pattern('^[0-9]*$'),
+    ]),
+    purchaseCgstPercent: new FormControl<number>(0, [
+      Validators.required,
+      Validators.min(0),
+      Validators.pattern('^[0-9]*$'),
+    ]),
+    purchaseSgstPercent: new FormControl<number>(0, [
+      Validators.required,
+      Validators.min(0),
+      Validators.pattern('^[0-9]*$'),
+    ]),
+    purchaseIgstPercent: new FormControl<number>(0, [
       Validators.required,
       Validators.min(0),
       Validators.pattern('^[0-9]*$'),
@@ -104,22 +119,22 @@ export class CreateBatchComponent {
     if (
       this.addBatchForm.value.saleQuantity &&
       this.addBatchForm.value.purchaseRate &&
-      this.addBatchForm.value.igstPercent &&
-      this.addBatchForm.value.cgstPercent &&
-      this.addBatchForm.value.sgstPercent
+      this.addBatchForm.value.purchaseIgstPercent &&
+      this.addBatchForm.value.purchaseCgstPercent &&
+      this.addBatchForm.value.purchaseSgstPercent
     ) {
       this.batchCalcuationsInfo.totalAmountExcludingTax =
         this.addBatchForm.value.saleQuantity *
         this.addBatchForm.value.purchaseRate;
       this.batchCalcuationsInfo.totalTax =
         (this.batchCalcuationsInfo.totalAmountExcludingTax *
-          this.addBatchForm.value.sgstPercent) /
+          this.addBatchForm.value.purchaseSgstPercent) /
           100 +
         (this.batchCalcuationsInfo.totalAmountExcludingTax *
-          this.addBatchForm.value.cgstPercent) /
+          this.addBatchForm.value.purchaseCgstPercent) /
           100 +
         (this.batchCalcuationsInfo.totalAmountExcludingTax *
-          this.addBatchForm.value.igstPercent) /
+          this.addBatchForm.value.purchaseIgstPercent) /
           100;
 
       this.batchCalcuationsInfo.discountedAmount =
@@ -148,9 +163,15 @@ export class CreateBatchComponent {
       console.error('Invalid batch form,', this.addBatchForm.value);
       return;
     }
-    console.log();
     this.addBatchInfoLoader = true;
-    this.productService.addBatchInProduct('').subscribe(
+    // create new batch ####  check for condition to update batch
+    let batchInfoToSend = {
+      productId: this.productDetail._id,
+      batchInfo: { ...this.addBatchForm.value, ...this.batchCalcuationsInfo }
+    }
+    console.log('Sendit batch data to create batch',batchInfoToSend);
+    
+    this.productService.addBatchInProduct(batchInfoToSend).subscribe(
       (data) => {
         console.log('ProductAdded to batch');
         this.addBatchForm.reset();
